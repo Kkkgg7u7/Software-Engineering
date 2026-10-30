@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/jiujiu-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/jiujiu-16.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/jiujiu-180.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070a14" />
+    <meta
+      name="description"
+      content="基于 AI 增强的多人在线狼人杀系统 —— 支持多人实时联机、自定义房间、局内私聊的在线狼人杀游戏"
+    />
+    <title>啾啾 JiuJiu · 社交桌游</title>
+
+    <!--
+      首屏骨架：在 Vue 应用挂载前显示，避免白屏。
+      背景色与 src/styles/main.css 的 --ww-bg 保持一致。
+    -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #070a14;
+        color: #e8ecf8;
+        font-family: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', system-ui,
+          sans-serif;
+      }
+      #app-boot {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        background: radial-gradient(circle at 50% 30%, #1b1030 0%, #070a14 65%);
+        transition: opacity 0.3s ease;
+      }
+      #app-boot img {
+  object-fit: contain;
+        width: 76px;
+        height: 76px;
+        border-radius: 18px;
+        box-shadow: 0 10px 40px rgba(124, 58, 237, 0.5);
+        animation: boot-float 3s ease-in-out infinite;
+      }
+      #app-boot p {
+        margin: 0;
+        font-size: 14px;
+        letter-spacing: 4px;
+        color: #9aa6c4;
+      }
+      #app-boot small {
+        color: #6b7794;
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+      @keyframes boot-float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      /* Vue 挂载完成后由 main.ts 移除 #app-boot */
+      #app-boot.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-boot">
+      <img src="/assets/brand/jiujiu-256.png" alt="啾啾 JiuJiu" />
+      <p>正在进入村庄…</p>
+      <small>多人在线 · 服务器权威 · 支持自定义房间</small>
+    </div>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1835">
+  <title>狼人杀美术素材预览</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#0b1835;color:#e8f5ff;font:15px/1.6 system-ui,'Microsoft YaHei',sans-serif}
+    main{max-width:1200px;margin:auto;padding:28px 20px 60px}h1{margin:0 0 4px;font-size:clamp(24px,4vw,34px)}p{color:#b8cde1;margin:8px 0 22px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px 14px}.card{margin:0;min-width:0}
+    .card img{width:100%;height:auto;display:block;border-radius:10px}.card figcaption{text-align:center;color:#bdd2e8;margin-top:6px;font-size:12px}
+    .card.active figcaption{color:#84dbff}.scenes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .scene img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;border-radius:10px}.scene figcaption{margin-top:5px;text-align:center}
+    @media(max-width:420px){main{padding:20px 12px 40px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 10px}}
+  </style>
+</head>
+<body><main>
+  <h1>狼人杀美术素材预览</h1>
+  <p>蓝色为好人卡，红色为狼人卡。标注“已实现”的身份可在游戏内使用；“素材预留”仅供美术查看，尚无对应游戏规则。</p>
+  <div class="grid" id="cards"></div>
+  <h2>场景背景</h2><div class="scenes" id="scenes"></div>
+</main>
+<script>
+const cards=[
+  ['villager','村民',1],['seer','预言家',1],['witch','女巫',1],['hunter','猎人',1],['guard','守卫',1],
+  ['cupid','爱神',1],['idiot','白痴',1],['medium','通灵师',0],['elder','长老',0],['bomber','炸弹师',0],
+  ['dream_weaver','织梦人',0],['white_night_messenger','白夜使者',0],['moon_priest','月夜祭司',0],['drunkard','老酒鬼',0],
+  ['sheep','小绵羊',0],['penguin','企鹅',0],['bear','熊',0],['rooster','大公鸡',0],['werewolf','狼人',1],['white_wolf_king','白狼王',1]
+];
+for(const [key,label,active] of cards){
+  const card=document.createElement('figure');card.className='card'+(active?' active':'');
+  const image=document.createElement('img');image.src=`../roles/${key}-card.svg?art=night-v1`;image.alt=label+'角色卡';image.loading='lazy';
+  const caption=document.createElement('figcaption');caption.textContent=active?'已实现':'素材预留';card.append(image,caption);document.querySelector('#cards').append(card);
+}
+for(const [key,label] of [['preparation','准备'],['game','对局牌桌'],['night','夜晚'],['day','白天'],['result','结算']]){
+  const figure=document.createElement('figure');figure.className='scene';const image=document.createElement('img');image.src=`scenes/${key}.jpg`;image.alt=label+'背景';image.loading='lazy';const caption=document.createElement('figcaption');caption.textContent=label;figure.append(image,caption);document.querySelector('#scenes').append(figure);
+}
+</script></body></html>

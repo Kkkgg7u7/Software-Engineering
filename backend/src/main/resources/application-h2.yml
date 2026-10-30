@@ -1,0 +1,49 @@
+# =====================================================================
+# 本地演示 profile：H2 + 自动建表 + 自动创建演示账号。
+#
+# 【默认：内存库】进程一停，数据就没了。适合开发调试与"演示完就丢"的场景。
+#
+# 【可选：文件库】想让注册的账号在重启后还在（例如室友各自注册账号、分几天玩），
+# 用环境变量把数据落到磁盘即可，不用改任何代码、不用装 MySQL：
+#
+#   PowerShell:
+#     $env:WEREWOLF_DB_URL="jdbc:h2:file:./data/werewolf;MODE=MySQL;DATABASE_TO_LOWER=TRUE;AUTO_SERVER=TRUE"
+#     java -jar target/werewolf-server.jar --spring.profiles.active=h2
+#
+#   bash:
+#     WEREWOLF_DB_URL="jdbc:h2:file:./data/werewolf;MODE=MySQL;DATABASE_TO_LOWER=TRUE;AUTO_SERVER=TRUE" \
+#       java -jar target/werewolf-server.jar --spring.profiles.active=h2
+#
+#   数据文件会生成在当前工作目录的 ./data/ 下（werewolf.mv.db）。
+#   AUTO_SERVER=TRUE 允许同时用 H2 控制台连上去查看数据。
+#
+# 注意：建表脚本用的是 CREATE TABLE IF NOT EXISTS，重启不会清空已有数据。
+#       对局进行中的状态本来就在内存里，重启后房间会消失，这是设计如此（见 docs/DATABASE.md）。
+# =====================================================================
+spring:
+  datasource:
+    url: ${WEREWOLF_DB_URL:jdbc:h2:mem:werewolf;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE}
+    driver-class-name: org.h2.Driver
+    username: ${WEREWOLF_DB_USER:sa}
+    password: ${WEREWOLF_DB_PASSWORD:}
+  sql:
+    init:
+      mode: always
+      # 顺序很重要：先建表（schema），再执行增量升级（migration）。
+      # migration.sql 用 IF NOT EXISTS，可反复执行，
+      # 用于给"已存在的旧库"补新增列，避免升级后启动报缺列。
+      schema-locations:
+        - classpath:db/h2/schema.sql
+        - classpath:db/h2/migration.sql
+        - classpath:db/h2/migrations/V002__user_profile.sql
+        - classpath:db/h2/migrations/V003__friendship_media.sql
+        - classpath:db/h2/migrations/V004__conversations.sql
+        - classpath:db/h2/migrations/V005__community.sql
+        - classpath:db/h2/migrations/V006__game_platform.sql
+        - classpath:db/h2/migrations/V007__room_voice.sql
+        - classpath:db/h2/migrations/V008__room_role_counts.sql
+      continue-on-error: false
+
+logging:
+  level:
+    com.werewolf: INFO

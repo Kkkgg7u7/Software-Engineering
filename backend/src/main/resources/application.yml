@@ -1,0 +1,102 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+  tomcat:
+    threads:
+      max: 200
+
+spring:
+  application:
+    name: werewolf-server
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:h2}
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    # 生产环境建议关掉，调试 SQL 时打开
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+
+werewolf:
+  jwt:
+    # 生产环境务必通过环境变量覆盖；至少 32 字节
+    secret: ${WEREWOLF_JWT_SECRET:werewolf-dev-secret-key-please-change-in-production-2024}
+    expire-minutes: 1440
+    issuer: werewolf-game
+  cors:
+    # 允许的来源（origin 模式，支持通配）。
+    # 默认已覆盖：本机、同局域网私网网段、cloudflared/ngrok 临时域名 —— 方便"别人用自己的电脑连进来"。
+    # 正式部署请用环境变量收窄为真实域名，例如：
+    #   WEREWOLF_CORS_ORIGINS=https://werewolf.example.com
+    allowed-origins: ${WEREWOLF_CORS_ORIGINS:http://localhost:*,http://127.0.0.1:*,http://192.168.*.*:*,http://10.*.*.*:*,http://172.16.*.*:*,http://172.17.*.*:*,http://172.18.*.*:*,http://172.19.*.*:*,http://172.2?.*.*:*,http://172.30.*.*:*,http://172.31.*.*:*,https://*.trycloudflare.com,https://*.ngrok-free.app,https://*.ngrok.io}
+  room:
+    # 提前结束房间的清理时间（分钟）
+    idle-timeout-minutes: 120
+  phase:
+    # 各阶段时长（秒）。演示时调小可以让一局跑得更快
+    starting-seconds: 6
+    # 身份确认：所有人都点过"我已确认身份"才会进入第一晚；
+    # 这个倒计时只是防挂机的兜底（超时自动确认）
+    confirm-seconds: 60
+    # 夜晚：狼人刀人 / 预言家查验 / 女巫用药，合计 3 分钟
+    # 阶段只会因为"所有相关人员都点了完成"或本倒计时耗尽而推进
+    night-seconds: 180
+    day-seconds: 20
+    # 讨论发言：每个人 5 分钟（不是整轮总时长）
+    discussion-seconds: 300
+    # 投票：3 分钟
+    voting-seconds: 180
+    check-winner-seconds: 4
+    # 预言家查验后的翻牌确认窗口：动画播完点"知道了"，或 30 秒走完才继续
+    seer-confirm-seconds: 30
+  ai:
+    # ===================================================================
+    # AI NPC 总开关。
+    #
+    # 当前阶段（基础功能优先）默认 false：
+    #   - 不会向任何外部 LLM 发起请求；
+    #   - 房间默认 aiCount=0，一局完全可以由 4 个真人玩家组成；
+    #   - 代码保留完整实现，需要演示 AI 时把它设为 true 并配置下面的 api-key 即可。
+    # ===================================================================
+    enabled: ${WEREWOLF_AI_ENABLED:false}
+    # 只支持 OpenAI 兼容的 /chat/completions 协议；DeepSeek / 通义 / Ollama 均可
+    base-url: ${WEREWOLF_AI_BASE_URL:https://api.deepseek.com}
+    path: /chat/completions
+    api-key: ${WEREWOLF_AI_API_KEY:}
+    model: ${WEREWOLF_AI_MODEL:deepseek-chat}
+    temperature: 0.9
+    max-tokens: 400
+    timeout-seconds: 12
+    # 单局 AI 调用总次数上限，防止费用失控（方案第十四节）
+    max-calls-per-game: 120
+    # AI 思考“拟人化”延迟区间（毫秒）
+    min-think-millis: 900
+    max-think-millis: 2600
+
+logging:
+  level:
+    root: INFO
+    com.werewolf: INFO
+    org.springframework.web.socket: WARN
+
+jiujiu:
+  voice:
+    ice-servers: ${JIUJIU_VOICE_ICE_SERVERS:[]}
+  media:
+    directory: ${JIUJIU_MEDIA_DIRECTORY:./data/media}

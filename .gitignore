@@ -1,0 +1,97 @@
+# =====================================================================
+# 仓库根 .gitignore —— 狼人杀项目（后端 Maven + 前端 Vite/pnpm）
+# 约定：只忽略“可再生成 / 本机私密 / IDE 生成”的内容，
+#       源码、脚本、SQL、素材（frontend/public/assets/**）必须入库。
+# =====================================================================
+
+# ------------------------------------------------------ Java / Maven --
+target/
+build/
+out/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
+
+# ------------------------------------------------ Node / 前端构建 -----
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+dist/
+dist-ssr/
+.vite/
+*.tsbuildinfo
+coverage/
+.nyc_output/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+
+# ------------------------------------------------- 环境变量 / 密钥 ----
+# 注意：*.example 模板必须入库（前端 frontend/.env.example、部署 deploy/.env.example）
+.env
+.env.local
+.env.*.local
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+
+# ------------------------------------------------------------ IDE -----
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.code-workspace
+.settings/
+.project
+.classpath
+.factorypath
+nbproject/private/
+*.swp
+*.swo
+
+# ------------------------------------------------- 日志 / 临时文件 -----
+logs/
+*.log
+*.tmp
+*.pid
+*.seed
+*.pid.lock
+*.hprof
+
+# --------------------------------------------- 本地工具链 / 运行时 ----
+.tools/
+runtime/
+tmp/
+temp/
+
+# 用户数据库和媒体文件
+backend/data/
+
+# -------------------------------------------------------- 操作系统 ----
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# TLS private keys and local deployment environment
+deploy/certificates/
+deploy/.env

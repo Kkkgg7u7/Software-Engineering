@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img">
+<defs>
+  <linearGradient id="dawnSky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#0b1020"/><stop offset="55%" stop-color="#f59e0b" stop-opacity="0.55"/>
+    <stop offset="100%" stop-color="#fde68a" stop-opacity="0.95"/>
+  </linearGradient>
+  <radialGradient id="dawnSun" cx="50%" cy="72%" r="45%">
+    <stop offset="0%" stop-color="#fffbeb" stop-opacity="1"/>
+    <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="640" height="640" fill="url(#dawnSky)"/>
+<circle cx="320" cy="460" r="240" fill="url(#dawnSun)"/>
+<circle cx="320" cy="470" r="110" fill="#fffbeb" opacity="0.95"/>
+<g fill="#0b1020" opacity="0.9">
+  <path d="M0 520 L120 430 L212 512 L320 420 L432 520 L540 440 L640 520 L640 640 L0 640 Z"/>
+</g>
+<g stroke="#fde68a" stroke-width="6" opacity="0.7" stroke-linecap="round">
+  <path d="M120 240 L120 300"/><path d="M210 200 L210 260"/><path d="M430 200 L430 260"/>
+  <path d="M520 240 L520 300"/>
+</g>
+</svg>

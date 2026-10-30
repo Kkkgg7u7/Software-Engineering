@@ -1,0 +1,10 @@
+# =====================================================================
+# pnpm 配置（pnpm v10 起 onlyBuiltDependencies / allowBuilds 必须写在这里）。
+#
+# 背景：pnpm v10 默认不执行依赖的安装脚本，esbuild 的原生可执行文件不会被落地，
+# 表现是 `vite build` 报 "esbuild binary not found"。
+# 因此这里显式允许 esbuild 与 vue-demi 运行安装脚本。
+# =====================================================================
+allowBuilds:
+  esbuild: true
+  vue-demi: true

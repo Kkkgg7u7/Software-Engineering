@@ -1,0 +1,480 @@
+/* =====================================================================
+   AI 视觉特效样式（方案第九节：AI 生成素材 + 前端播放）。
+   每种特效 = 一张预生成 SVG 素材 + 一段 CSS 关键帧动画，运行时不调用任何 AI 接口。
+   EffectManager.vue 负责按事件顺序播放，这里只定义动画。
+   ===================================================================== */
+
+.ww-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ww-fx__bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(5, 7, 15, 0.72), rgba(5, 7, 15, 0.94));
+}
+
+.ww-fx__art {
+  position: relative;
+  width: min(46vw, 420px);
+  max-height: 70vh;
+  filter: drop-shadow(0 0 28px rgba(167, 139, 250, 0.55));
+}
+
+.ww-fx__title {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: clamp(20px, 3.4vw, 40px);
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: #fff;
+  text-shadow: 0 0 22px rgba(124, 58, 237, 0.9), 0 4px 18px rgba(0, 0, 0, 0.7);
+}
+
+.ww-fx__subtitle {
+  position: absolute;
+  bottom: 7%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: clamp(12px, 1.6vw, 18px);
+  letter-spacing: 2px;
+  color: #dbeafe;
+  opacity: 0.9;
+}
+
+/* ------------------------------------------------------------ 夜晚降临 --- */
+
+.ww-fx--night .ww-fx__bg {
+  animation: ww-fx-night-bg 2s ease-out forwards;
+}
+
+.ww-fx--night .ww-fx__art {
+  animation: ww-fx-night-art 2s ease-out forwards;
+}
+
+@keyframes ww-fx-night-bg {
+  0% {
+    opacity: 0;
+    background: radial-gradient(circle at 50% 30%, rgba(30, 27, 75, 0.9), rgba(2, 4, 12, 0.99));
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.86;
+  }
+}
+
+@keyframes ww-fx-night-art {
+  0% {
+    transform: scale(0.7) translateY(-30px);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.05) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.95;
+  }
+}
+
+/* ------------------------------------------------------------ 狼人猎杀 --- */
+
+.ww-fx--kill .ww-fx__art {
+  animation: ww-fx-kill-art 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.ww-fx--kill .ww-fx__bg {
+  animation: ww-fx-flash-red 1.5s ease-out forwards;
+}
+
+@keyframes ww-fx-kill-art {
+  0% {
+    transform: scale(2.4) rotate(-14deg);
+    opacity: 0;
+  }
+  22% {
+    transform: scale(1.02) rotate(0deg);
+    opacity: 1;
+  }
+  32% {
+    transform: scale(1.08) rotate(2deg);
+  }
+  100% {
+    transform: scale(1.16) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+@keyframes ww-fx-flash-red {
+  0% {
+    opacity: 0;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.55), rgba(5, 7, 15, 0.92));
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    background: radial-gradient(circle, rgba(127, 29, 29, 0.25), rgba(5, 7, 15, 0.96));
+  }
+}
+
+/* ------------------------------------------------------------ 预言查验 --- */
+
+.ww-fx--check .ww-fx__art {
+  animation: ww-fx-check-art 2.1s ease-in-out forwards;
+}
+
+@keyframes ww-fx-check-art {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  25% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+  55% {
+    transform: scale(1) rotate(4deg);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1.04) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------ 女巫解药 --- */
+
+.ww-fx--heal .ww-fx__art {
+  animation: ww-fx-heal-art 2s ease-out forwards;
+}
+
+@keyframes ww-fx-heal-art {
+  0% {
+    transform: translateY(60px) scale(0.6);
+    opacity: 0;
+    filter: drop-shadow(0 0 0 rgba(52, 211, 153, 0));
+  }
+  30% {
+    transform: translateY(0) scale(1.04);
+    opacity: 1;
+    filter: drop-shadow(0 0 34px rgba(52, 211, 153, 0.85));
+  }
+  70% {
+    transform: translateY(-10px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-46px) scale(1.08);
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------ 女巫毒药 --- */
+
+.ww-fx--poison .ww-fx__art {
+  animation: ww-fx-poison-art 2s ease-in forwards;
+}
+
+.ww-fx--poison .ww-fx__bg {
+  animation: ww-fx-flash-purple 2s ease-out forwards;
+}
+
+@keyframes ww-fx-poison-art {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  28% {
+    transform: scale(1.06) rotate(-6deg);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1) rotate(6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.14) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+@keyframes ww-fx-flash-purple {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.5), rgba(5, 7, 15, 0.94));
+  }
+  100% {
+    opacity: 0;
+    background: radial-gradient(circle, rgba(76, 29, 149, 0.22), rgba(5, 7, 15, 0.96));
+  }
+}
+
+/* -------------------------------------------------------------- 天亮 --- */
+
+.ww-fx--dawn .ww-fx__art {
+  animation: ww-fx-dawn-art 2.4s ease-out forwards;
+}
+
+.ww-fx--dawn .ww-fx__bg {
+  animation: ww-fx-dawn-bg 2.4s ease-out forwards;
+}
+
+@keyframes ww-fx-dawn-art {
+  0% {
+    transform: translateY(120px) scale(1.15);
+    opacity: 0;
+  }
+  35% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-16px) scale(1.02);
+    opacity: 0;
+  }
+}
+
+@keyframes ww-fx-dawn-bg {
+  0% {
+    opacity: 0;
+    background: linear-gradient(180deg, rgba(11, 16, 32, 0.98), rgba(245, 158, 11, 0.16));
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    background: linear-gradient(180deg, rgba(11, 16, 32, 0.9), rgba(253, 230, 138, 0.08));
+  }
+}
+
+/* ------------------------------------------------------------ 投票放逐 --- */
+
+.ww-fx--vote .ww-fx__art {
+  animation: ww-fx-vote-art 1.8s ease-out forwards;
+}
+
+@keyframes ww-fx-vote-art {
+  0% {
+    transform: scale(0.3) rotate(-18deg);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.1) rotate(4deg);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+}
+
+/* -------------------------------------------------------------- 出局 --- */
+
+.ww-fx--death .ww-fx__bg {
+  animation: ww-fx-death-bg 1.5s ease-out forwards;
+}
+
+.ww-fx__skull {
+  font-size: clamp(64px, 12vw, 150px);
+  animation: ww-fx-death-art 1.5s ease-out forwards;
+  filter: drop-shadow(0 0 24px rgba(148, 163, 184, 0.8));
+}
+
+@keyframes ww-fx-death-art {
+  0% {
+    transform: scale(1.8) rotate(-10deg);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.92) translateY(14px);
+    opacity: 0;
+  }
+}
+
+@keyframes ww-fx-death-bg {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+    background: radial-gradient(circle, rgba(51, 65, 85, 0.6), rgba(5, 7, 15, 0.95));
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------ 游戏开始 --- */
+
+.ww-fx--start .ww-fx__art {
+  animation: ww-fx-start-art 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ww-fx-start-art {
+  0% {
+    transform: perspective(900px) rotateY(180deg) scale(0.5);
+    opacity: 0;
+  }
+  45% {
+    transform: perspective(900px) rotateY(0deg) scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(900px) rotateY(0deg) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------ 胜利结算 --- */
+
+.ww-fx--win .ww-fx__art {
+  animation: ww-fx-win-art 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ww-fx--win .ww-fx__bg {
+  animation: ww-fx-win-bg 3.2s ease-out forwards;
+}
+
+.ww-fx--win .ww-fx__title {
+  animation: ww-fx-win-title 3.2s ease-out forwards;
+}
+
+@keyframes ww-fx-win-art {
+  0% {
+    transform: scale(0.4) translateY(40px);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.06) translateY(0);
+    opacity: 1;
+  }
+  85% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.04);
+    opacity: 0;
+  }
+}
+
+@keyframes ww-fx-win-bg {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+    background: radial-gradient(circle at 50% 60%, rgba(124, 58, 237, 0.45), rgba(5, 7, 15, 0.95));
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ww-fx-win-title {
+  0% {
+    letter-spacing: 30px;
+    opacity: 0;
+  }
+  35% {
+    letter-spacing: 6px;
+    opacity: 1;
+  }
+  100% {
+    letter-spacing: 8px;
+    opacity: 0.9;
+  }
+}
+
+/* -------------------------------------------------------- 座位局部特效 --- */
+
+/** 座位上的一个小爆发光环（投票/查验指向某座位时使用）。 */
+@keyframes ww-seat-burst {
+  0% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.65);
+  }
+  100% {
+    box-shadow: 0 0 0 26px rgba(251, 191, 36, 0);
+  }
+}
+
+.seat-burst {
+  animation: ww-seat-burst 1.1s ease-out 2;
+}
+
+/** 夜间遮罩：让“闭眼”状态一目了然。 */
+.ww-night-veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 42%, rgba(30, 27, 75, 0.24), rgba(2, 4, 12, 0.74));
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+/** 阶段切换横幅。 */
+@keyframes ww-phase-banner {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.96);
+  }
+  18% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+}
+
+.phase-banner {
+  animation: ww-phase-banner 2.6s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ww-fx__art,
+  .ww-fx__bg,
+  .ww-fx__title,
+  .ww-fx__skull,
+  .seat-burst,
+  .phase-banner {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

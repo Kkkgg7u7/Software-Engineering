@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img">
+<defs>
+  <radialGradient id="poison" cx="50%" cy="60%" r="55%">
+    <stop offset="0%" stop-color="#e9d5ff" stop-opacity="0.85"/>
+    <stop offset="60%" stop-color="#7c3aed" stop-opacity="0.4"/>
+    <stop offset="100%" stop-color="#2e1065" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="poisonGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="11"/>
+  </filter>
+</defs>
+<circle cx="320" cy="350" r="200" fill="url(#poison)" filter="url(#poisonGlow)"/>
+<path d="M320 128 C320 128 214 268 214 344 C214 402 262 448 320 448 C378 448 426 402 426 344
+         C426 268 320 128 320 128 Z" fill="#c4b5fd" opacity="0.9"/>
+<path d="M320 200 C320 200 252 300 252 352 C252 388 282 418 320 418 C358 418 388 388 388 352
+         C388 300 320 200 320 200 Z" fill="#4c1d95" opacity="0.75"/>
+<g stroke="#a855f7" stroke-width="6" fill="none" opacity="0.8" stroke-linecap="round">
+  <path d="M150 200 C186 232 186 268 150 300"/>
+  <path d="M490 200 C454 232 454 268 490 300"/>
+</g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" role="img">
+<defs>
+  <linearGradient id="winG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.95"/>
+    <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0.9"/>
+  </linearGradient>
+  <filter id="winGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="14"/>
+  </filter>
+</defs>
+<ellipse cx="320" cy="240" rx="270" ry="180" fill="#60a5fa" opacity="0.25" filter="url(#winGlow)"/>
+<path d="M120 380 L520 380 L488 190 L152 190 Z" fill="url(#winG)" opacity="0.9"/>
+<path d="M152 190 L128 110 L212 152 Z" fill="#60a5fa"/>
+<path d="M488 190 L512 110 L428 152 Z" fill="#60a5fa"/>
+<g fill="#fde68a" opacity="0.95">
+  <polygon points="320.00,62.00 327.64,85.48 352.34,85.49 332.36,100.02 339.98,123.51 320.00,109.00 300.02,123.51 307.64,100.02 287.66,85.49 312.36,85.48"/>
+</g>
+<path d="M96 420 L544 420" stroke="#60a5fa" stroke-width="10" stroke-linecap="round"
+      opacity="0.85"/>
+</svg>

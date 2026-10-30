@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img">
+<defs>
+  <radialGradient id="lens" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#dbeafe" stop-opacity="0.9"/>
+    <stop offset="70%" stop-color="#60a5fa" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="lensGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="10"/>
+  </filter>
+</defs>
+<circle cx="320" cy="300" r="212" fill="url(#lens)" filter="url(#lensGlow)"/>
+<circle cx="320" cy="300" r="168" fill="none" stroke="#bfdbfe" stroke-width="10" opacity="0.9"/>
+<circle cx="320" cy="300" r="120" fill="none" stroke="#93c5fd" stroke-width="4" opacity="0.6"/>
+<circle cx="320" cy="300" r="52" fill="#e0f2fe" opacity="0.95"/>
+<circle cx="320" cy="300" r="24" fill="#1e3a8a"/>
+<ellipse cx="256" cy="230" rx="46" ry="28" fill="#ffffff" opacity="0.4"
+         transform="rotate(-30 256 230)"/>
+<path d="M320 512 L360 592 L280 592 Z" fill="#93c5fd" opacity="0.8"/>
+</svg>

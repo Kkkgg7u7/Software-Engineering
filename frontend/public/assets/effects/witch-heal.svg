@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img">
+<defs>
+  <radialGradient id="heal" cx="50%" cy="55%" r="52%">
+    <stop offset="0%" stop-color="#d1fae5" stop-opacity="0.95"/>
+    <stop offset="65%" stop-color="#34d399" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#065f46" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="healGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="12"/>
+  </filter>
+</defs>
+<circle cx="320" cy="330" r="196" fill="url(#heal)" filter="url(#healGlow)"/>
+<rect x="278" y="180" width="84" height="300" rx="26" fill="#ecfdf5" opacity="0.95"/>
+<rect x="170" y="288" width="300" height="84" rx="26" fill="#ecfdf5" opacity="0.95"/>
+<circle cx="320" cy="330" r="150" fill="none" stroke="#a7f3d0" stroke-width="6" opacity="0.7"/>
+<g fill="#6ee7b7" opacity="0.85">
+  <circle cx="146" cy="176" r="10"/><circle cx="510" cy="212" r="8"/>
+  <circle cx="128" cy="470" r="7"/><circle cx="524" cy="470" r="11"/>
+  <circle cx="320" cy="106" r="7"/>
+</g>
+</svg>

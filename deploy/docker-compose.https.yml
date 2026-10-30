@@ -1,0 +1,8 @@
+# Use together with docker-compose.yml after placing trusted certificates in deploy/certificates/.
+services:
+  frontend:
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx-https.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certificates:/etc/jiujiu/tls:ro

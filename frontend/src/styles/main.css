@@ -1,0 +1,342 @@
+/* =====================================================================
+   全局样式与设计令牌。
+   主题：月夜 · 深紫 + 血红 + 月光金，呼应狼人杀氛围。
+   所有组件都应使用这里的 CSS 变量，不要硬编码颜色，方便后续换肤。
+   ===================================================================== */
+
+:root {
+  /* 背景与层次 */
+  --ww-bg: #070a14;
+  --ww-bg-soft: #0e1324;
+  --ww-panel: rgba(17, 23, 42, 0.82);
+  --ww-panel-solid: #111a2b;
+  --ww-panel-2: rgba(26, 33, 56, 0.78);
+  --ww-border: rgba(124, 58, 237, 0.32);
+  --ww-border-soft: rgba(148, 163, 184, 0.18);
+
+  --ww-gradient-bg: linear-gradient(160deg, #05070f 0%, #0b1020 38%, #150f2b 72%, #070a14 100%);
+
+  /* 文字 */
+  --ww-text: #e8ecf8;
+  --ww-text-dim: #9aa6c4;
+  --ww-text-mute: #6b7794;
+
+  /* 品牌与语义色 */
+  --ww-primary: #7c3aed;
+  --ww-primary-soft: rgba(124, 58, 237, 0.16);
+  --ww-moon: #fbbf24;
+  --ww-moon-soft: rgba(251, 191, 36, 0.16);
+  --ww-wolf: #ef4444;
+  --ww-wolf-soft: rgba(239, 68, 68, 0.16);
+  --ww-seer: #60a5fa;
+  --ww-seer-soft: rgba(96, 165, 250, 0.16);
+  --ww-witch: #a855f7;
+  --ww-witch-soft: rgba(168, 85, 247, 0.16);
+  --ww-villager: #34d399;
+  --ww-villager-soft: rgba(52, 211, 153, 0.16);
+  --ww-danger: #f87171;
+  --ww-success: #22c55e;
+  --ww-warning: #f59e0b;
+
+  /* 排版 */
+  --ww-font: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', system-ui, sans-serif;
+  --ww-font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+
+  /* 圆角与阴影 */
+  --ww-radius-sm: 8px;
+  --ww-radius: 14px;
+  --ww-radius-lg: 20px;
+  --ww-shadow: 0 18px 46px rgba(2, 6, 23, 0.6);
+  --ww-shadow-glow: 0 0 26px rgba(124, 58, 237, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--ww-font);
+  background: var(--ww-bg);
+  color: var(--ww-text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--ww-moon);
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ---------------------------------------------------------- 通用面板 ---- */
+
+.ww-panel {
+  background: var(--ww-panel);
+  border: 1px solid var(--ww-border);
+  border-radius: var(--ww-radius);
+  box-shadow: var(--ww-shadow);
+  backdrop-filter: blur(10px);
+}
+
+.ww-panel--pad {
+  padding: 18px 20px;
+}
+
+.ww-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ww-text);
+  margin-bottom: 12px;
+}
+
+.ww-panel__title::before {
+  content: '';
+  width: 4px;
+  height: 15px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--ww-moon), var(--ww-primary));
+}
+
+.ww-muted {
+  color: var(--ww-text-dim);
+  font-size: 12px;
+}
+
+.ww-mono {
+  font-family: var(--ww-font-mono);
+}
+
+.ww-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ww-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ww-spacer {
+  flex: 1;
+}
+
+.ww-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124, 58, 237, 0.5) transparent;
+}
+
+.ww-scroll::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.ww-scroll::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.5);
+  border-radius: 4px;
+}
+
+.ww-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 徽标：座位号 */
+.ww-seat-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--ww-primary), #4c1d95);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--ww-font-mono);
+}
+
+.ww-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  border: 1px solid transparent;
+}
+
+.ww-tag--ai {
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.16);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+.ww-tag--wolf {
+  color: var(--ww-wolf);
+  background: var(--ww-wolf-soft);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.ww-tag--seer {
+  color: var(--ww-seer);
+  background: var(--ww-seer-soft);
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+.ww-tag--witch {
+  color: var(--ww-witch);
+  background: var(--ww-witch-soft);
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.ww-tag--villager {
+  color: var(--ww-villager);
+  background: var(--ww-villager-soft);
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+.ww-tag--dead {
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.14);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+/* 角色主题色工具类 */
+.role-werewolf {
+  --role-color: var(--ww-wolf);
+  --role-soft: var(--ww-wolf-soft);
+}
+
+.role-seer {
+  --role-color: var(--ww-seer);
+  --role-soft: var(--ww-seer-soft);
+}
+
+.role-witch {
+  --role-color: var(--ww-witch);
+  --role-soft: var(--ww-witch-soft);
+}
+
+.role-villager {
+  --role-color: var(--ww-villager);
+  --role-soft: var(--ww-villager-soft);
+}
+
+/* --------------------------------------------------- Element Plus 覆写 --- */
+
+.el-button--primary {
+  --el-button-bg-color: var(--ww-primary);
+  --el-button-border-color: var(--ww-primary);
+  --el-button-hover-bg-color: #8b5cf6;
+  --el-button-hover-border-color: #8b5cf6;
+}
+
+.el-card,
+.el-dialog,
+.el-drawer {
+  --el-bg-color: var(--ww-panel-solid);
+}
+
+.el-dialog {
+  background: linear-gradient(160deg, #131a2e, #0d1222) !important;
+  border: 1px solid var(--ww-border);
+  border-radius: var(--ww-radius) !important;
+}
+
+.el-dialog__title {
+  color: var(--ww-text) !important;
+  font-weight: 700;
+}
+
+.el-form-item__label {
+  color: var(--ww-text-dim) !important;
+}
+
+.el-input__wrapper,
+.el-textarea__inner,
+.el-input-number,
+.el-select__wrapper {
+  background-color: rgba(8, 12, 24, 0.72) !important;
+  box-shadow: 0 0 0 1px var(--ww-border-soft) inset !important;
+}
+
+.el-input__inner,
+.el-textarea__inner {
+  color: var(--ww-text) !important;
+}
+
+.el-table {
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: rgba(124, 58, 237, 0.14);
+  --el-table-text-color: var(--ww-text);
+  --el-table-header-text-color: var(--ww-text-dim);
+  --el-table-border-color: var(--ww-border-soft);
+}
+
+.el-empty__description p {
+  color: var(--ww-text-mute);
+}
+
+.el-message {
+  backdrop-filter: blur(8px);
+}
+
+/* ---------------------------------------------------------- 动画基础 ---- */
+
+@keyframes ww-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes ww-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes ww-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ww-float {
+  animation: ww-float 3.6s ease-in-out infinite;
+}
+
+.ww-pulse {
+  animation: ww-pulse 1.8s ease-in-out infinite;
+}

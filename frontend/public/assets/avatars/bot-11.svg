@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img">
+<defs>
+  <linearGradient id="av11" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="hsl(24,62%,58%)"/>
+    <stop offset="100%" stop-color="hsl(72,46%,34%)"/>
+  </linearGradient>
+</defs>
+<rect width="128" height="128" rx="64" fill="url(#av11)"/>
+<circle cx="11.6" cy="39.2" r="1.9" fill="#ffffff" opacity="0.53"/><circle cx="73.3" cy="18.7" r="1.9" fill="#ffffff" opacity="0.79"/><circle cx="70.2" cy="40.9" r="2.0" fill="#ffffff" opacity="0.54"/><circle cx="80.5" cy="27.0" r="1.0" fill="#ffffff" opacity="0.66"/><circle cx="39.8" cy="42.5" r="0.9" fill="#ffffff" opacity="0.38"/><circle cx="90.7" cy="18.1" r="1.4" fill="#ffffff" opacity="0.44"/><circle cx="86.6" cy="22.0" r="2.0" fill="#ffffff" opacity="0.33"/><circle cx="100.8" cy="21.4" r="0.9" fill="#ffffff" opacity="0.86"/><circle cx="103.0" cy="37.1" r="0.9" fill="#ffffff" opacity="0.38"/><circle cx="54.1" cy="46.4" r="2.1" fill="#ffffff" opacity="0.65"/>
+<circle cx="85" cy="35" r="20"
+        fill="#ffffff" opacity="0.16"/>
+<path d="M64 46 L80 100 L48 100 Z"
+      fill="#ffffff" opacity="0.9"/>
+<circle cx="64" cy="52" r="16" fill="#ffffff" opacity="0.95"/>
+</svg>

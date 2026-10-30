@@ -1,0 +1,85 @@
+# =====================================================================
+# 换行符与文本/二进制属性统一策略
+#
+# 背景：本项目在 Windows 上开发、在 Linux 容器里构建运行。
+#   * 统一用 LF，避免 CRLF 混入导致：
+#       - Shell 脚本出现 "bad interpreter: /bin/bash^M"
+#       - SQL 脚本、Dockerfile、Nginx 配置解析异常
+#       - Git diff 噪音巨大
+#   * Windows 专用的 .bat/.cmd/.ps1 保留 CRLF（否则部分环境执行异常）。
+# =====================================================================
+
+# 默认：自动识别文本文件，仓库与工作区统一 LF
+* text=auto eol=lf
+
+# ------------------------------------------------------- 文本 + LF ----
+*.java    text eol=lf
+*.kt      text eol=lf
+*.groovy  text eol=lf
+*.xml     text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+*.properties text eol=lf
+*.sql     text eol=lf
+*.sh      text eol=lf
+*.bash    text eol=lf
+*.conf    text eol=lf
+*.md      text eol=lf
+*.txt     text eol=lf
+*.json    text eol=lf
+*.ts      text eol=lf
+*.js      text eol=lf
+*.mjs     text eol=lf
+*.cjs     text eol=lf
+*.vue     text eol=lf
+*.css     text eol=lf
+*.scss    text eol=lf
+*.html    text eol=lf
+*.svg     text eol=lf
+*.lock    text eol=lf
+Dockerfile        text eol=lf
+*.Dockerfile      text eol=lf
+.dockerignore     text eol=lf
+.gitignore        text eol=lf
+.gitattributes    text eol=lf
+
+# --------------------------------------------- Windows 脚本 + CRLF ----
+*.bat     text eol=crlf
+*.cmd     text eol=crlf
+*.ps1     text eol=crlf
+
+# ----------------------------------------------------------- 二进制 ----
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.webp    binary
+*.ico     binary
+*.bmp     binary
+*.pdf     binary
+*.zip     binary
+*.gz      binary
+*.tar     binary
+*.7z      binary
+*.jar     binary
+*.war     binary
+*.class   binary
+*.woff    binary
+*.woff2   binary
+*.ttf     binary
+*.eot     binary
+*.xlsx    binary
+*.xls     binary
+*.docx    binary
+*.pptx    binary
+
+# -------------------------------------------------- Git 展示与行为 ----
+# 语言统计时把前端构建产物与第三方目录排除（即使被误提交也不影响统计）
+frontend/node_modules/**  linguist-vendored
+frontend/dist/**          linguist-generated
+backend/target/**         linguist-generated
+*.min.js                  linguist-generated
+*.min.css                 linguist-generated
+# 锁文件不参与逐行 diff（有冲突时直接重新 install 生成更安全）
+pnpm-lock.yaml            -diff
+package-lock.json         -diff

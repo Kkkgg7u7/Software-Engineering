@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img">
+<defs>
+  <linearGradient id="voteG" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f97316"/>
+  </linearGradient>
+  <filter id="voteGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="9"/>
+  </filter>
+</defs>
+<circle cx="256" cy="256" r="200" fill="#f59e0b" opacity="0.2" filter="url(#voteGlow)"/>
+<path d="M110 200 L256 96 L402 200 L402 396 L110 396 Z" fill="#0f172a" opacity="0.55"/>
+<path d="M150 396 L212 214 L256 300 L300 214 L362 396 Z" fill="url(#voteG)"/>
+<path d="M256 268 L256 396" stroke="#0f172a" stroke-width="8" opacity="0.6"/>
+<circle cx="256" cy="176" r="34" fill="url(#voteG)"/>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img">
+<defs>
+  <linearGradient id="claw" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ff5a5a" stop-opacity="0"/>
+    <stop offset="45%" stop-color="#ff2d2d" stop-opacity="0.95"/>
+    <stop offset="100%" stop-color="#7f1d1d" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="clawGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="7"/>
+  </filter>
+</defs>
+<g stroke="url(#claw)" stroke-width="26" fill="none" stroke-linecap="round" filter="url(#clawGlow)">
+  <path d="M96 92 C214 230 300 352 452 560"/>
+  <path d="M186 66 C286 214 366 340 532 540"/>
+  <path d="M286 60 C368 200 436 330 596 512"/>
+</g>
+<g stroke="#ffd7d7" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9">
+  <path d="M96 92 C214 230 300 352 452 560"/>
+  <path d="M186 66 C286 214 366 340 532 540"/>
+  <path d="M286 60 C368 200 436 330 596 512"/>
+</g>
+<circle cx="320" cy="320" r="150" fill="#ff2d2d" opacity="0.14"/>
+</svg>

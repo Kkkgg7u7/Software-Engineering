@@ -1,0 +1,123 @@
+# =====================================================================
+# 一键部署编排：MySQL 8 + Spring Boot 后端 + Nginx 前端
+#
+# 用法（在 deploy/ 目录下执行）：
+#   cp .env.example .env        # Windows: copy .env.example .env
+#   docker compose up -d --build
+#   docker compose ps
+#   浏览器打开 http://localhost
+#
+# 说明：
+#   * 需要 Docker Compose V2（`docker compose` 子命令），因此不写 version 字段；
+#   * 变量全部来自同目录的 .env（不存在时用下面的默认值）；
+#   * MySQL 首次启动（mysql-data 卷为空）会自动执行 database/schema.sql 建库建表；
+#     已有数据请备份后按 database/migrations 顺序升级，不可删除数据卷。
+# =====================================================================
+
+name: werewolf
+
+services:
+
+  # ------------------------------------------------------------- MySQL --
+  mysql:
+    image: mysql:8.0
+    container_name: werewolf-mysql
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in deploy/.env}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-werewolf}
+      MYSQL_USER: ${MYSQL_USER:-werewolf}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in deploy/.env}
+      TZ: Asia/Shanghai
+    volumes:
+      - mysql-data:/var/lib/mysql
+      # 初始化脚本：容器内 MySQL 首次启动时按文件名顺序执行
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      # 可选：2 条示例对局记录（战绩页空库时有内容展示）。需要时取消注释。
+      # - ../database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - werewolf-net
+
+  # ----------------------------------------------------------- 后端 -----
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    image: werewolf-backend:1.0.0
+    container_name: werewolf-backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # 生产库 profile：连接信息全部走环境变量（application-mysql.yml）
+      SPRING_PROFILES_ACTIVE: mysql,prod
+      MYSQL_HOST: mysql
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-werewolf}
+      MYSQL_USER: ${MYSQL_USER:-werewolf}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in deploy/.env}
+      # 生产务必改掉：至少 32 字节，否则启动即失败
+      WEREWOLF_JWT_SECRET: ${WEREWOLF_JWT_SECRET:?Set WEREWOLF_JWT_SECRET in deploy/.env}
+      # 同源部署（Nginx 反代 /api）时浏览器不会跨域，这里填对外访问源即可
+      WEREWOLF_CORS_ORIGINS: ${WEREWOLF_CORS_ORIGINS:?Set exact HTTPS origins in deploy/.env}
+      # AI NPC 默认关闭：基础功能一局可由 4 个真人完成。
+      # 需要 AI 陪玩时把 WEREWOLF_AI_ENABLED 设为 true 并配置 WEREWOLF_AI_API_KEY。
+      WEREWOLF_AI_ENABLED: ${WEREWOLF_AI_ENABLED:-false}
+      WEREWOLF_AI_BASE_URL: ${WEREWOLF_AI_BASE_URL:-https://api.deepseek.com}
+      WEREWOLF_AI_API_KEY: ${WEREWOLF_AI_API_KEY:-}
+      JIUJIU_MEDIA_DIRECTORY: /app/data/media
+      JIUJIU_VOICE_ICE_SERVERS: ${JIUJIU_VOICE_ICE_SERVERS:-[]}
+      WEREWOLF_AI_MODEL: ${WEREWOLF_AI_MODEL:-deepseek-chat}
+      # JVM 内存参数已在 backend/Dockerfile 的 ENTRYPOINT 里固定为 -Xms256m -Xmx512m；
+      # 需要覆盖时通过 JAVA_TOOL_OPTIONS 注入即可（JVM 会自动读取，后者优先）。
+      # 小内存机器示例：JAVA_TOOL_OPTIONS=-Xms128m -Xmx256m
+      TZ: Asia/Shanghai
+    volumes:
+      - media-data:/app/data/media
+    ports:
+      # 后端仅绑定宿主机回环地址，便于直接 curl /api/health 与排查问题；
+      # 只想要前端入口时把这一行注释掉（前端容器内网访问 backend:8080 不受影响）
+      - "127.0.0.1:${BACKEND_PORT:-8080}:8080"
+    networks:
+      - werewolf-net
+
+  # ----------------------------------------------------------- 前端 -----
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+      args:
+        # 同源部署：REST 走 /api（Nginx 反代），WS 留空按页面 host 自动推导
+        VITE_API_BASE: ${VITE_API_BASE:-/api}
+        VITE_WS_URL: ${VITE_WS_URL:-}
+        VITE_USE_SOCKJS: ${VITE_USE_SOCKJS:-false}
+    image: werewolf-frontend:1.0.0
+    container_name: werewolf-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${WEB_PORT:-80}:80"
+    networks:
+      - werewolf-net
+
+volumes:
+  media-data:
+    name: jiujiu-media-data
+  mysql-data:
+    name: werewolf-mysql-data
+
+networks:
+  werewolf-net:
+    name: werewolf-net
+    driver: bridge

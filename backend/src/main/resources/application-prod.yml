@@ -1,0 +1,18 @@
+# Activate together with mysql. Requires externally supplied strong secrets and exact HTTPS origins.
+server:
+  address: 0.0.0.0
+  error:
+    include-message: never
+    include-stacktrace: never
+spring:
+  h2:
+    console:
+      enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
