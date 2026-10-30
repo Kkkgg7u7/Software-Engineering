@@ -99,7 +99,7 @@
 
 ### 明确舍弃（符合方案，未实现）
 
-表白墙 / 好友社交 / 群组系统 / 独立剧本杀 / 语音视频 / WebRTC / 微服务 / Kafka / RabbitMQ / Redis 集群 / 推荐系统。
+独立剧本杀 / 语音视频 / WebRTC / 微服务 / Kafka / RabbitMQ / Redis 集群 / 推荐系统。
 
 > 以上均**未出现在** `backend/pom.xml` 与 `frontend/package.json` 的依赖列表中，可逐条核对。
 
